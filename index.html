@@ -1,0 +1,409 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>별풍선 시너지표 LIVE</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background:
+        radial-gradient(circle at top, rgba(56, 189, 248, 0.18), transparent 35%),
+        #020617;
+    font-family: Arial, 'Malgun Gothic', sans-serif;
+    color: #e5e7eb;
+}
+
+.wrap {
+    max-width: 1180px;
+    margin: 30px auto;
+    padding: 24px;
+}
+
+.header {
+    text-align: center;
+    background: linear-gradient(180deg, #111827, #020617);
+    border: 1px solid #1e293b;
+    border-radius: 24px;
+    padding: 28px 18px;
+    box-shadow: 0 0 28px rgba(56, 189, 248, 0.12);
+}
+
+h1 {
+    margin: 0;
+    color: #38bdf8;
+    font-size: 32px;
+    letter-spacing: -1px;
+}
+
+.sub {
+    margin-top: 8px;
+    color: #94a3b8;
+    font-size: 13px;
+}
+
+.summary {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-top: 18px;
+}
+
+.summary-box {
+    background: #020617;
+    border: 1px solid #334155;
+    border-radius: 16px;
+    padding: 14px;
+}
+
+.summary-label {
+    color: #94a3b8;
+    font-size: 12px;
+    margin-bottom: 6px;
+}
+
+.summary-value {
+    color: #facc15;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.section-title {
+    margin: 28px 0 12px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #f8fafc;
+}
+
+.top-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+}
+
+.top-card {
+    background: linear-gradient(135deg, #020617, #111827);
+    border: 1px solid #334155;
+    border-radius: 20px;
+    padding: 18px;
+    box-shadow: 0 0 18px rgba(56, 189, 248, 0.12);
+}
+
+.top-1 {
+    border-color: #facc15;
+    box-shadow: 0 0 24px rgba(250, 204, 21, 0.18);
+}
+
+.top-2 {
+    border-color: #cbd5e1;
+}
+
+.top-3 {
+    border-color: #fb923c;
+}
+
+.rank-badge {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: bold;
+    color: #020617;
+    background: #38bdf8;
+    padding: 5px 9px;
+    border-radius: 999px;
+    margin-bottom: 12px;
+}
+
+.crew-line {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    align-items: center;
+}
+
+.crew-name {
+    font-size: 22px;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.star-count {
+    font-size: 18px;
+    font-weight: bold;
+    color: #facc15;
+    white-space: nowrap;
+}
+
+.mini-info {
+    margin-top: 10px;
+    color: #cbd5e1;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.bar-box {
+    margin-top: 12px;
+    width: 100%;
+    height: 9px;
+    background: #0f172a;
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.bar {
+    height: 100%;
+    background: linear-gradient(90deg, #38bdf8, #22c55e);
+    border-radius: 999px;
+}
+
+.member-list {
+    margin-top: 12px;
+    color: #94a3b8;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.table-wrap {
+    background: linear-gradient(180deg, #0f172a, #020617);
+    border: 1px solid #1e293b;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+thead {
+    background: #111827;
+}
+
+th {
+    padding: 14px 10px;
+    color: #38bdf8;
+    border-bottom: 1px solid #334155;
+    white-space: nowrap;
+}
+
+td {
+    padding: 13px 10px;
+    text-align: center;
+    border-bottom: 1px solid #1e293b;
+    color: #e5e7eb;
+}
+
+tr:hover {
+    background: rgba(56, 189, 248, 0.08);
+}
+
+.rank-cell {
+    font-weight: bold;
+    color: #facc15;
+}
+
+.name-cell {
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.members-cell {
+    text-align: left;
+    color: #94a3b8;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.empty-box,
+.empty-table {
+    text-align: center;
+    color: #94a3b8;
+    padding: 30px;
+}
+
+.footer {
+    text-align: center;
+    margin-top: 18px;
+    color: #64748b;
+    font-size: 12px;
+}
+
+@media (max-width: 900px) {
+    .summary {
+        grid-template-columns: 1fr;
+    }
+
+    .top-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .wrap {
+        padding: 14px;
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+
+    table {
+        font-size: 12px;
+    }
+}
+</style>
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="header">
+            <h1>⭐ 별풍선 시너지표 LIVE ⭐</h1>
+            <div class="sub">별풍선 기준 자동 정렬 · 멤버 수 / 1인 평균 / 점유율 자동 계산</div>
+
+            <div class="summary">
+                <div class="summary-box">
+                    <div class="summary-label">총 별풍선</div>
+                    <div class="summary-value">30,500,000개</div>
+                </div>
+
+                <div class="summary-box">
+                    <div class="summary-label">등록 크루</div>
+                    <div class="summary-value">3팀</div>
+                </div>
+
+                <div class="summary-box">
+                    <div class="summary-label">마지막 업데이트</div>
+                    <div class="summary-value" style="font-size:16px;">2026-06-12 05:39:32</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-title">🏆 TOP 3</div>
+
+        <div class="top-grid">
+            
+        <div class="top-card top-1">
+            <div class="rank-badge">🥇 TOP 1</div>
+
+            <div class="crew-line">
+                <div class="crew-name">1위 씨나인</div>
+                <div class="star-count">12,500,000개</div>
+            </div>
+
+            <div class="mini-info">
+                멤버 수 4명 · 1인 평균 3,125,000개 · 점유율 41.0%
+            </div>
+
+            <div class="bar-box">
+                <div class="bar" style="width:100.0%"></div>
+            </div>
+
+            <div class="member-list">
+                멤버: 멤버1 / 멤버2 / 멤버3 / 멤버4
+            </div>
+        </div>
+    
+        <div class="top-card top-2">
+            <div class="rank-badge">🥈 TOP 2</div>
+
+            <div class="crew-line">
+                <div class="crew-name">2위 광상</div>
+                <div class="star-count">9,800,000개</div>
+            </div>
+
+            <div class="mini-info">
+                멤버 수 3명 · 1인 평균 3,266,666개 · 점유율 32.1%
+            </div>
+
+            <div class="bar-box">
+                <div class="bar" style="width:78.4%"></div>
+            </div>
+
+            <div class="member-list">
+                멤버: 멤버1 / 멤버2 / 멤버3
+            </div>
+        </div>
+    
+        <div class="top-card top-3">
+            <div class="rank-badge">🥉 TOP 3</div>
+
+            <div class="crew-line">
+                <div class="crew-name">3위 수니그룹</div>
+                <div class="star-count">8,200,000개</div>
+            </div>
+
+            <div class="mini-info">
+                멤버 수 3명 · 1인 평균 2,733,333개 · 점유율 26.9%
+            </div>
+
+            <div class="bar-box">
+                <div class="bar" style="width:65.6%"></div>
+            </div>
+
+            <div class="member-list">
+                멤버: 멤버1 / 멤버2 / 멤버3
+            </div>
+        </div>
+    
+        </div>
+
+        <div class="section-title">📊 전체 순위표</div>
+
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>순위</th>
+                        <th>크루명</th>
+                        <th>총 별풍선</th>
+                        <th>멤버 수</th>
+                        <th>1인 평균</th>
+                        <th>점유율</th>
+                        <th>멤버</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+        <tr>
+            <td class="rank-cell">1</td>
+            <td class="name-cell">씨나인</td>
+            <td>12,500,000개</td>
+            <td>4명</td>
+            <td>3,125,000개</td>
+            <td>41.0%</td>
+            <td class="members-cell">멤버1 / 멤버2 / 멤버3 / 멤버4</td>
+        </tr>
+    
+        <tr>
+            <td class="rank-cell">2</td>
+            <td class="name-cell">광상</td>
+            <td>9,800,000개</td>
+            <td>3명</td>
+            <td>3,266,666개</td>
+            <td>32.1%</td>
+            <td class="members-cell">멤버1 / 멤버2 / 멤버3</td>
+        </tr>
+    
+        <tr>
+            <td class="rank-cell">3</td>
+            <td class="name-cell">수니그룹</td>
+            <td>8,200,000개</td>
+            <td>3명</td>
+            <td>2,733,333개</td>
+            <td>26.9%</td>
+            <td class="members-cell">멤버1 / 멤버2 / 멤버3</td>
+        </tr>
+    
+                </tbody>
+            </table>
+        </div>
+
+        <div class="footer">
+            Generated by Python · member.json 기반 자동 생성
+        </div>
+    </div>
+</body>
+</html>
