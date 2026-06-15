@@ -175,6 +175,110 @@ h1 {
     color: #facc15;
     white-space: nowrap;
 }
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(2, 6, 23, 0.78);
+    backdrop-filter: blur(5px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    padding: 18px;
+}
+
+.modal-box {
+    width: 100%;
+    max-width: 460px;
+    background: linear-gradient(180deg, #111827, #020617);
+    border: 1px solid rgba(56, 189, 248, 0.45);
+    border-radius: 22px;
+    padding: 24px;
+    box-shadow: 0 0 35px rgba(56, 189, 248, 0.2);
+    text-align: center;
+}
+
+.modal-title {
+    color: #38bdf8;
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 12px;
+}
+
+.modal-text {
+    color: #cbd5e1;
+    font-size: 14px;
+    line-height: 1.7;
+    text-align: left;
+    background: rgba(15, 23, 42, 0.8);
+    border: 1px solid rgba(148, 163, 184, 0.18);
+    border-radius: 14px;
+    padding: 14px;
+}
+
+.modal-stat-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.modal-stat-box {
+    background: #020617;
+    border: 1px solid rgba(56, 189, 248, 0.25);
+    border-radius: 12px;
+    padding: 10px;
+    text-align: center;
+}
+
+.modal-stat-box span {
+    display: block;
+    color: #94a3b8;
+    font-size: 11px;
+    margin-bottom: 5px;
+}
+
+.modal-stat-box b {
+    color: #facc15;
+    font-size: 15px;
+}
+
+.modal-desc {
+    color: #cbd5e1;
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+.modal-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 18px;
+}
+
+.modal-btn {
+    flex: 1;
+    border: 0;
+    border-radius: 999px;
+    padding: 12px 10px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+.modal-btn.main {
+    background: #38bdf8;
+    color: #020617;
+}
+
+.modal-btn.sub {
+    background: #1e293b;
+    color: #cbd5e1;
+    border: 1px solid #334155;
+}
+
+.modal-btn:hover {
+    opacity: 0.88;
+}
 
 .mini-info {
     margin-top: 10px;
@@ -358,7 +462,49 @@ tr:hover {
 </style>
 </head>
 
+
 <body>
+    <div id="noticeModal" class="modal-overlay">
+        <div class="modal-box">
+            <div class="modal-title">📌 안내사항</div>
+
+           <div class="modal-text">
+    <div class="modal-stat-grid">
+        <div class="modal-stat-box">
+            <span>총 별풍선</span>
+            <b>4,591,886개</b>
+        </div>
+
+        <div class="modal-stat-box">
+            <span>등록 크루</span>
+            <b>3팀</b>
+        </div>
+
+        <div class="modal-stat-box">
+            <span>집계 멤버</span>
+            <b>10명</b>
+        </div>
+
+        <div class="modal-stat-box">
+            <span>미집계</span>
+            <b>0명</b>
+        </div>
+    </div>
+
+    <div class="modal-desc">
+        이 현황판은 풍고 월간 별풍선 랭킹 기준으로 멤버별 받은 별풍선을 집계합니다.<br>
+        미집계 멤버 없이 정상 집계되었습니다.<br>
+        마지막 업데이트: 2026-06-16 00:52:47
+    </div>
+</div>
+
+            <div class="modal-buttons">
+                <button class="modal-btn main" onclick="closeNoticeModal()">확인</button>
+                <button class="modal-btn sub" onclick="hideNoticeToday()">오늘 하루 안보기</button>
+            </div>
+        </div>
+    </div>
+
     <div class="wrap">
         <div class="header">
             <h1>⭐ SOOP 크루 별풍선 시너지 랭킹 ⭐</h1>
@@ -371,7 +517,7 @@ tr:hover {
             <div class="summary">
                 <div class="summary-box">
                     <div class="summary-label">총 별풍선</div>
-                    <div class="summary-value">4,185,879개</div>
+                    <div class="summary-value">4,591,886개</div>
                 </div>
 
                 <div class="summary-box">
@@ -381,7 +527,7 @@ tr:hover {
 
                 <div class="summary-box">
                     <div class="summary-label">마지막 업데이트</div>
-                    <div class="summary-value" style="font-size:16px;">2026-06-14 04:48:47</div>
+                    <div class="summary-value" style="font-size:16px;">2026-06-16 00:52:47</div>
                 </div>
             </div>
         </div>
@@ -403,11 +549,11 @@ tr:hover {
 
             <div class="crew-line">
                 <div class="crew-name">1위 씨나인</div>
-                <div class="star-count">1,782,791개</div>
+                <div class="star-count">2,034,731개</div>
             </div>
 
             <div class="mini-info">
-                멤버 수 4명 · 1인 평균 445,697개 · 점유율 42.6%
+                멤버 수 4명 · 1인 평균 508,682개 · 점유율 44.3%
             </div>
 
             <div class="bar-box">
@@ -417,7 +563,7 @@ tr:hover {
             <details class="member-detail">
                  <summary>멤버별 상세 보기</summary>
                  <div class="member-list">
-                     <span class='member-chip'>송채연♥ <b>517,392개</b></span><span class='member-chip'>이다니♥ <b>466,765개</b></span><span class='member-chip'>혜루찡 <b>432,207개</b></span><span class='member-chip'>쁠리vvely <b>366,427개</b></span>
+                     <span class='member-chip'>송채연♥ <b>626,956개</b></span><span class='member-chip'>혜루찡 <b>540,246개</b></span><span class='member-chip'>이다니♥ <b>501,102개</b></span><span class='member-chip'>쁠리vvely <b>366,427개</b></span>
                  </div>
 </details>
         </div>
@@ -427,21 +573,21 @@ tr:hover {
 
             <div class="crew-line">
                 <div class="crew-name">2위 광상</div>
-                <div class="star-count">1,507,308개</div>
+                <div class="star-count">1,615,366개</div>
             </div>
 
             <div class="mini-info">
-                멤버 수 3명 · 1인 평균 502,436개 · 점유율 36.0%
+                멤버 수 3명 · 1인 평균 538,455개 · 점유율 35.2%
             </div>
 
             <div class="bar-box">
-                <div class="bar" style="width:84.5%"></div>
+                <div class="bar" style="width:79.4%"></div>
             </div>
 
             <details class="member-detail">
                  <summary>멤버별 상세 보기</summary>
                  <div class="member-list">
-                     <span class='member-chip'>가을이♡ <b>618,616개</b></span><span class='member-chip'>설인아님♥ <b>454,516개</b></span><span class='member-chip'>미디♡ <b>434,176개</b></span>
+                     <span class='member-chip'>가을이♡ <b>669,989개</b></span><span class='member-chip'>미디♡ <b>490,861개</b></span><span class='member-chip'>설인아님♥ <b>454,516개</b></span>
                  </div>
 </details>
         </div>
@@ -451,21 +597,21 @@ tr:hover {
 
             <div class="crew-line">
                 <div class="crew-name">3위 이노레이블</div>
-                <div class="star-count">895,780개</div>
+                <div class="star-count">941,789개</div>
             </div>
 
             <div class="mini-info">
-                멤버 수 3명 · 1인 평균 298,593개 · 점유율 21.4%
+                멤버 수 3명 · 1인 평균 313,929개 · 점유율 20.5%
             </div>
 
             <div class="bar-box">
-                <div class="bar" style="width:50.2%"></div>
+                <div class="bar" style="width:46.3%"></div>
             </div>
 
             <details class="member-detail">
                  <summary>멤버별 상세 보기</summary>
                  <div class="member-list">
-                     <span class='member-chip'>애지니♡ <b>530,680개</b></span><span class='member-chip'>리에♡ <b>208,266개</b></span><span class='member-chip'>누리- <b>156,834개</b></span>
+                     <span class='member-chip'>애지니♡ <b>542,414개</b></span><span class='member-chip'>리에♡ <b>224,055개</b></span><span class='member-chip'>누리- <b>175,320개</b></span>
                  </div>
 </details>
         </div>
@@ -492,15 +638,15 @@ tr:hover {
         <tr>
             <td class="rank-cell">1</td>
             <td class="name-cell">씨나인</td>
-            <td>1,782,791개</td>
+            <td>2,034,731개</td>
             <td>4명</td>
-            <td>445,697개</td>
-            <td>42.6%</td>
+            <td>508,682개</td>
+            <td>44.3%</td>
             <td class="members-cell">
                 <details class="member-detail small">
                     <summary>멤버별 보기</summary>
                     <div class="member-list">
-                        <span class='member-chip'>송채연♥ <b>517,392개</b></span><span class='member-chip'>이다니♥ <b>466,765개</b></span><span class='member-chip'>혜루찡 <b>432,207개</b></span><span class='member-chip'>쁠리vvely <b>366,427개</b></span>
+                        <span class='member-chip'>송채연♥ <b>626,956개</b></span><span class='member-chip'>혜루찡 <b>540,246개</b></span><span class='member-chip'>이다니♥ <b>501,102개</b></span><span class='member-chip'>쁠리vvely <b>366,427개</b></span>
                     </div>
                 </details>
             </td>
@@ -509,15 +655,15 @@ tr:hover {
         <tr>
             <td class="rank-cell">2</td>
             <td class="name-cell">광상</td>
-            <td>1,507,308개</td>
+            <td>1,615,366개</td>
             <td>3명</td>
-            <td>502,436개</td>
-            <td>36.0%</td>
+            <td>538,455개</td>
+            <td>35.2%</td>
             <td class="members-cell">
                 <details class="member-detail small">
                     <summary>멤버별 보기</summary>
                     <div class="member-list">
-                        <span class='member-chip'>가을이♡ <b>618,616개</b></span><span class='member-chip'>설인아님♥ <b>454,516개</b></span><span class='member-chip'>미디♡ <b>434,176개</b></span>
+                        <span class='member-chip'>가을이♡ <b>669,989개</b></span><span class='member-chip'>미디♡ <b>490,861개</b></span><span class='member-chip'>설인아님♥ <b>454,516개</b></span>
                     </div>
                 </details>
             </td>
@@ -526,15 +672,15 @@ tr:hover {
         <tr>
             <td class="rank-cell">3</td>
             <td class="name-cell">이노레이블</td>
-            <td>895,780개</td>
+            <td>941,789개</td>
             <td>3명</td>
-            <td>298,593개</td>
-            <td>21.4%</td>
+            <td>313,929개</td>
+            <td>20.5%</td>
             <td class="members-cell">
                 <details class="member-detail small">
                     <summary>멤버별 보기</summary>
                     <div class="member-list">
-                        <span class='member-chip'>애지니♡ <b>530,680개</b></span><span class='member-chip'>리에♡ <b>208,266개</b></span><span class='member-chip'>누리- <b>156,834개</b></span>
+                        <span class='member-chip'>애지니♡ <b>542,414개</b></span><span class='member-chip'>리에♡ <b>224,055개</b></span><span class='member-chip'>누리- <b>175,320개</b></span>
                     </div>
                 </details>
             </td>
@@ -550,6 +696,41 @@ tr:hover {
     </div>
 
 <script>
+
+function getTodayKey() {
+    const d = new Date();
+    return d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
+}
+
+function openNoticeModal() {
+    const modal = document.getElementById("noticeModal");
+    if (modal) {
+        modal.style.display = "flex";
+    }
+}
+
+function closeNoticeModal() {
+    const modal = document.getElementById("noticeModal");
+    if (modal) {
+        modal.style.display = "none";
+    }
+}
+
+function hideNoticeToday() {
+    const today = getTodayKey();
+    localStorage.setItem("noticeHideDate", today);
+    closeNoticeModal();
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+    const today = getTodayKey();
+    const savedDate = localStorage.getItem("noticeHideDate");
+
+    if (savedDate !== today) {
+        openNoticeModal();
+    }
+});
+
 function normalizeText(text) {
     return (text || "")
         .toLowerCase()
