@@ -3,182 +3,506 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>SOOP 크루 별풍선 시너지 랭킹</title>
+<title>SOOP 크루 별풍선 랭킹 보드</title>
 
 <style>
 * {
     box-sizing: border-box;
 }
 
+html {
+    background: #090913;
+}
+
 body {
     margin: 0;
     background:
-        radial-gradient(circle at top, rgba(56, 189, 248, 0.18), transparent 35%),
-        #020617;
+        radial-gradient(circle at top, rgba(96, 165, 250, 0.12), transparent 28%),
+        #090913;
+    color: #f8fafc;
     font-family: Arial, 'Malgun Gothic', sans-serif;
-    color: #e5e7eb;
 }
 
 .wrap {
-    max-width: 1180px;
-    margin: 30px auto;
-    padding: 24px;
+    max-width: 1500px;
+    margin: 0 auto;
+    padding: 24px 18px 34px;
 }
 
-.header {
-    text-align: center;
-    background: linear-gradient(180deg, #111827, #020617);
-    border: 1px solid #1e293b;
-    border-radius: 24px;
-    padding: 28px 18px;
-    box-shadow: 0 0 28px rgba(56, 189, 248, 0.12);
+.title-area {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 18px;
 }
 
-h1 {
+.title-left h1 {
     margin: 0;
-    color: #38bdf8;
-    font-size: 32px;
-    letter-spacing: -1px;
+    color: #e5e7eb;
+    font-size: 28px;
+    letter-spacing: -0.5px;
 }
 
-.sub {
-    margin-top: 8px;
+.title-left .sub {
+    margin-top: 5px;
     color: #94a3b8;
     font-size: 13px;
 }
 
-.notice-box {
-    margin: 16px auto 0;
-    max-width: 720px;
-    background: rgba(56, 189, 248, 0.08);
-    border: 1px solid rgba(56, 189, 248, 0.35);
+.summary-mini {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.summary-pill {
+    background: #11111f;
+    border: 1px solid #24263a;
+    border-radius: 999px;
+    padding: 8px 12px;
     color: #cbd5e1;
-    border-radius: 14px;
-    padding: 12px 14px;
+    font-size: 12px;
+}
+
+.summary-pill b {
+    color: #facc15;
+}
+
+.crew-board:not(.expanded) .member-row.extra-row {
+    display: none;
+}
+
+.show-more-btn {
+    width: calc(100% - 20px);
+    margin: 10px auto 12px;
+    display: block;
+    border: 1px solid rgba(96, 165, 250, 0.28);
+    background: #111827;
+    color: #cbd5e1;
+    border-radius: 999px;
+    padding: 9px 10px;
+    font-size: 12px;
+    font-weight: 900;
+    cursor: pointer;
+}
+
+.show-more-btn:hover {
+    background: #1e293b;
+    color: #ffffff;
+    border-color: rgba(96, 165, 250, 0.55);
+}
+
+.top3-section {
+    margin: 18px 0 20px;
+}
+
+.top3-title {
+    color: #f8fafc;
+    font-size: 18px;
+    font-weight: 900;
+    margin-bottom: 10px;
+}
+
+.top3-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+
+.top3-card {
+    position: relative;
+    overflow: hidden;
+    background:
+        linear-gradient(135deg, var(--top-head), #11111f 72%);
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    border-radius: 18px;
+    padding: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+}
+
+.top3-card::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 5px;
+    height: 100%;
+    background: var(--top-accent);
+}
+
+.top3-rank {
+    color: var(--top-accent);
     font-size: 13px;
-    line-height: 1.5;
+    font-weight: 900;
+    margin-bottom: 8px;
+}
+
+.top3-name {
+    color: #ffffff;
+    font-size: 22px;
+    font-weight: 900;
+    margin-bottom: 8px;
+}
+
+.top3-star {
+    color: #facc15;
+    font-size: 25px;
+    font-weight: 900;
+    letter-spacing: -0.5px;
+}
+
+.top3-sub {
+    margin-top: 7px;
+    color: #cbd5e1;
+    font-size: 12px;
 }
 
 .search-area {
-    margin: 24px 0 6px;
-    text-align: center;
+    margin: 0 0 18px;
 }
 
 .search-area input {
     width: 100%;
-    max-width: 520px;
-    padding: 13px 16px;
+    max-width: 460px;
+    padding: 12px 15px;
     border-radius: 999px;
-    border: 1px solid rgba(56, 189, 248, 0.45);
-    background: #020617;
+    border: 1px solid #2d3044;
+    background: #0c0c18;
     color: #e5e7eb;
-    font-size: 14px;
     outline: none;
-    box-shadow: 0 0 18px rgba(56, 189, 248, 0.08);
-}
-
-.search-area input::placeholder {
-    color: #64748b;
+    font-size: 13px;
 }
 
 .search-area input:focus {
-    border-color: #38bdf8;
-    box-shadow: 0 0 22px rgba(56, 189, 248, 0.22);
-}
-.summary {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
-    margin-top: 18px;
+    border-color: #60a5fa;
+    box-shadow: 0 0 18px rgba(96, 165, 250, 0.18);
 }
 
-.summary-box {
-    background: #020617;
-    border: 1px solid #334155;
+.board-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+    align-items: stretch;
+}
+
+.crew-board {
+    position: relative;
+    min-height: 760px;
+    background: #0b0b15;
+    border: 1px solid #2b2c3b;
     border-radius: 16px;
-    padding: 14px;
-}
-
-.summary-label {
-    color: #94a3b8;
-    font-size: 12px;
-    margin-bottom: 6px;
-}
-
-.summary-value {
-    color: #facc15;
-    font-size: 20px;
-    font-weight: bold;
-}
-
-.section-title {
-    margin: 28px 0 12px;
-    font-size: 20px;
-    font-weight: bold;
-    color: #f8fafc;
-}
-
-.top-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 14px;
-}
-
-.top-card {
-    background: linear-gradient(135deg, #020617, #111827);
-    border: 1px solid #334155;
-    border-radius: 20px;
-    padding: 18px;
-    box-shadow: 0 0 18px rgba(56, 189, 248, 0.12);
-}
-
-.top-1 {
-    border-color: #facc15;
-    box-shadow: 0 0 24px rgba(250, 204, 21, 0.18);
-}
-
-.top-2 {
-    border-color: #cbd5e1;
-}
-
-.top-3 {
-    border-color: #fb923c;
-}
-
-.rank-badge {
-    display: inline-block;
-    font-size: 12px;
-    font-weight: bold;
-    color: #020617;
-    background: #38bdf8;
-    padding: 5px 9px;
-    border-radius: 999px;
-    margin-bottom: 12px;
-}
-
-.crew-line {
+    overflow: hidden;
     display: flex;
-    justify-content: space-between;
-    gap: 10px;
+    flex-direction: column;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+.crew-rank-badge {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 38px;
+    height: 48px;
+    background: var(--rank);
+    color: #ffffff;
+    font-weight: 900;
+    font-size: 18px;
+    display: flex;
     align-items: center;
+    justify-content: center;
+    border-bottom-right-radius: 10px;
+    z-index: 5;
+}
+
+.crew-header {
+    height: 138px;
+    padding: 18px 14px 12px 42px;
+    background:
+        linear-gradient(135deg, var(--head), #151523 70%);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.crew-logo {
+    width: 72px;
+    height: 72px;
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    flex: 0 0 auto;
+    overflow: hidden;
+}
+
+.crew-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.text-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    font-size: 25px;
+    font-weight: 900;
+    letter-spacing: -1px;
+}
+
+.crew-info {
+    min-width: 0;
+    flex: 1;
+    text-align: right;
 }
 
 .crew-name {
-    font-size: 22px;
-    font-weight: bold;
+    font-size: 24px;
+    font-weight: 900;
     color: #ffffff;
+    line-height: 1.15;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-.star-count {
-    font-size: 18px;
+.crew-avg-label {
+    margin-top: 10px;
+    color: #cbd5e1;
+    font-size: 11px;
     font-weight: bold;
+}
+
+.crew-avg-value {
+    margin-top: 2px;
+    color: var(--accent);
+    font-size: 24px;
+    font-weight: 900;
+    line-height: 1.05;
+}
+
+.crew-sales {
+    height: 55px;
+    background: rgba(250, 204, 21, 0.08);
+    border-top: 1px solid rgba(250, 204, 21, 0.10);
+    border-bottom: 1px solid #242436;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 12px;
+}
+
+.sales-label {
     color: #facc15;
+    font-size: 12px;
+    font-weight: 900;
+}
+
+.sales-value {
+    color: #facc15;
+    font-size: 16px;
+    font-weight: 900;
+}
+
+.crew-total-track {
+    height: 4px;
+    background: #191927;
+}
+
+.crew-total-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), #60a5fa);
+}
+
+.member-list {
+    flex: 1;
+    padding: 0;
+}
+
+.member-row {
+    position: relative;
+    min-height: 57px;
+    border-bottom: 1px solid #242436;
+    background: #11111d;
+}
+
+.member-row:nth-child(even) {
+    background: #0d0d18;
+}
+
+.member-row.first {
+    background:
+        linear-gradient(90deg, rgba(34, 255, 76, 0.18), rgba(96, 165, 250, 0.08)),
+        #10121d;
+    min-height: 65px;
+}
+
+.member-row.missing {
+    opacity: 0.62;
+}
+
+.member-main {
+    min-height: 48px;
+    display: grid;
+    grid-template-columns: 52px 38px 1fr auto;
+    gap: 8px;
+    align-items: center;
+    padding: 9px 10px 7px;
+}
+
+.member-rank {
+    width: 24px;
+    height: 24px;
+    border-radius: 7px;
+    background: #2a2b3a;
+    color: #aeb3c7;
+    font-size: 11px;
+    font-weight: 900;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+}
+
+.top-badge {
+    min-width: 52px;
+    height: 22px;
+    border-radius: 999px;
+    background: var(--accent);
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: 900;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 7px;
+    margin-left: -2px;
+}
+
+.member-avatar {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid rgba(255, 255, 255, 0.22);
+    background: #242436;
+    flex: 0 0 auto;
+}
+
+.member-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.text-avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 900;
+    background:
+        radial-gradient(circle at top, rgba(255, 255, 255, 0.24), transparent 55%),
+        var(--accent2);
+}
+
+.member-name {
+    color: #f8fafc;
+    font-size: 14px;
+    font-weight: 900;
+    min-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.member-score {
+    color: #60a5fa;
+    font-size: 14px;
+    font-weight: 900;
+    text-align: right;
     white-space: nowrap;
 }
+
+.member-row.missing .member-score {
+    color: #94a3b8;
+}
+
+.member-track {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 4px;
+    background: #222232;
+}
+
+.member-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), #60a5fa);
+}
+
+.crew-footer {
+    height: 61px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-top: 1px solid #2b2c3b;
+    margin-top: auto;
+}
+
+.footer-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.footer-box:first-child {
+    border-right: 1px solid #2b2c3b;
+}
+
+.footer-label {
+    color: #cbd5e1;
+    font-size: 11px;
+    font-weight: bold;
+    margin-bottom: 4px;
+}
+
+.footer-value {
+    color: #facc15;
+    font-size: 15px;
+    font-weight: 900;
+}
+
+.empty-board {
+    color: #94a3b8;
+    text-align: center;
+    padding: 40px;
+    border: 1px solid #2b2c3b;
+    border-radius: 14px;
+}
+
+.empty-member {
+    color: #94a3b8;
+    text-align: center;
+    padding: 24px 10px;
+}
+
+.bottom-info {
+    margin-top: 18px;
+    color: #64748b;
+    font-size: 12px;
+    text-align: center;
+    line-height: 1.6;
+}
+
 .modal-overlay {
     position: fixed;
     inset: 0;
-    background: rgba(2, 6, 23, 0.78);
+    background: rgba(3, 7, 18, 0.78);
     backdrop-filter: blur(5px);
     display: none;
     align-items: center;
@@ -190,69 +514,35 @@ h1 {
 .modal-box {
     width: 100%;
     max-width: 460px;
-    background: linear-gradient(180deg, #111827, #020617);
-    border: 1px solid rgba(56, 189, 248, 0.45);
+    background: linear-gradient(180deg, #111827, #070712);
+    border: 1px solid rgba(96, 165, 250, 0.35);
     border-radius: 22px;
-    padding: 24px;
-    box-shadow: 0 0 35px rgba(56, 189, 248, 0.2);
-    text-align: center;
+    padding: 22px;
+    box-shadow: 0 0 35px rgba(96, 165, 250, 0.18);
 }
 
 .modal-title {
-    color: #38bdf8;
-    font-size: 22px;
-    font-weight: bold;
+    color: #60a5fa;
+    font-size: 21px;
+    font-weight: 900;
     margin-bottom: 12px;
+    text-align: center;
 }
 
 .modal-text {
     color: #cbd5e1;
-    font-size: 14px;
-    line-height: 1.7;
-    text-align: left;
-    background: rgba(15, 23, 42, 0.8);
-    border: 1px solid rgba(148, 163, 184, 0.18);
-    border-radius: 14px;
-    padding: 14px;
-}
-
-.modal-stat-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 8px;
-    margin-bottom: 12px;
-}
-
-.modal-stat-box {
-    background: #020617;
-    border: 1px solid rgba(56, 189, 248, 0.25);
-    border-radius: 12px;
-    padding: 10px;
-    text-align: center;
-}
-
-.modal-stat-box span {
-    display: block;
-    color: #94a3b8;
-    font-size: 11px;
-    margin-bottom: 5px;
-}
-
-.modal-stat-box b {
-    color: #facc15;
-    font-size: 15px;
-}
-
-.modal-desc {
-    color: #cbd5e1;
     font-size: 13px;
     line-height: 1.7;
+    background: rgba(15, 23, 42, 0.82);
+    border: 1px solid rgba(148, 163, 184, 0.16);
+    border-radius: 14px;
+    padding: 14px;
 }
 
 .modal-buttons {
     display: flex;
     gap: 10px;
-    margin-top: 18px;
+    margin-top: 16px;
 }
 
 .modal-btn {
@@ -261,12 +551,12 @@ h1 {
     border-radius: 999px;
     padding: 12px 10px;
     cursor: pointer;
-    font-weight: bold;
+    font-weight: 900;
     font-size: 13px;
 }
 
 .modal-btn.main {
-    background: #38bdf8;
+    background: #60a5fa;
     color: #020617;
 }
 
@@ -280,420 +570,1462 @@ h1 {
     opacity: 0.88;
 }
 
-.mini-info {
-    margin-top: 10px;
-    color: #cbd5e1;
-    font-size: 13px;
-    line-height: 1.5;
-}
-
-.bar-box {
-    margin-top: 12px;
-    width: 100%;
-    height: 9px;
-    background: #0f172a;
-    border-radius: 999px;
-    overflow: hidden;
-}
-
-.bar {
-    height: 100%;
-    background: linear-gradient(90deg, #38bdf8, #22c55e);
-    border-radius: 999px;
-}
-
-.member-list {
-    margin-top: 12px;
-    color: #94a3b8;
-    font-size: 12px;
-    line-height: 1.8;
-}
-
-.member-chip {
-    display: inline-block;
-    margin: 3px 4px 3px 0;
-    padding: 5px 8px;
-    border-radius: 999px;
-    background: rgba(56, 189, 248, 0.12);
-    border: 1px solid rgba(56, 189, 248, 0.35);
-    color: #e5e7eb;
-    font-size: 12px;
-    white-space: nowrap;
-}
-.member-detail {
-    margin-top: 12px;
-}
-
-.member-detail summary {
-    cursor: pointer;
-    list-style: none;
-    display: inline-block;
-    padding: 7px 11px;
-    border-radius: 999px;
-    background: rgba(56, 189, 248, 0.12);
-    border: 1px solid rgba(56, 189, 248, 0.35);
-    color: #38bdf8;
-    font-size: 12px;
-    font-weight: bold;
-    user-select: none;
-}
-
-.member-detail summary::-webkit-details-marker {
-    display: none;
-}
-
-.member-detail summary::after {
-    content: " ▼";
-    font-size: 10px;
-}
-
-.member-detail[open] summary::after {
-    content: " ▲";
-}
-
-.member-detail.small {
-    margin-top: 0;
-}
-.member-detail.small summary {
-    padding: 5px 9px;
-    font-size: 11px;
-}
-.member-chip b {
-    color: #facc15;
-}
-
-.member-chip.off {
-    background: rgba(148, 163, 184, 0.08);
-    border-color: rgba(148, 163, 184, 0.25);
-    color: #94a3b8;
-}
-
-.member-chip.off b {
-    color: #94a3b8;
-}
-
-.table-wrap {
-    background: linear-gradient(180deg, #0f172a, #020617);
-    border: 1px solid #1e293b;
-    border-radius: 20px;
-    overflow: hidden;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 14px;
-}
-
-thead {
-    background: #111827;
-}
-
-th {
-    padding: 14px 10px;
-    color: #38bdf8;
-    border-bottom: 1px solid #334155;
-    white-space: nowrap;
-}
-
-td {
-    padding: 13px 10px;
-    text-align: center;
-    border-bottom: 1px solid #1e293b;
-    color: #e5e7eb;
-}
-
-tr:hover {
-    background: rgba(56, 189, 248, 0.08);
-}
-
-.rank-cell {
-    font-weight: bold;
-    color: #facc15;
-}
-
-.name-cell {
-    font-weight: bold;
-    color: #ffffff;
-}
-
-.members-cell {
-    text-align: left;
-    color: #94a3b8;
-    font-size: 12px;
-    line-height: 1.5;
-}
-
-.empty-box,
-.empty-table {
-    text-align: center;
-    color: #94a3b8;
-    padding: 30px;
-}
-
-.footer {
-    text-align: center;
-    margin-top: 18px;
-    color: #64748b;
-    font-size: 12px;
-}
-
-@media (max-width: 900px) {
-    .summary {
-        grid-template-columns: 1fr;
+@media (max-width: 1100px) {
+    .title-area {
+        align-items: flex-start;
+        flex-direction: column;
     }
 
-    .top-grid {
+    .top3-grid {
         grid-template-columns: 1fr;
     }
+}
 
+@media (max-width: 600px) {
     .wrap {
-        padding: 14px;
+        padding: 16px 10px 28px;
     }
 
-    h1 {
-        font-size: 24px;
+    .board-grid {
+        grid-template-columns: 1fr;
     }
 
-    table {
-        font-size: 12px;
+    .crew-board {
+        min-height: auto;
+    }
+
+    .title-left h1 {
+        font-size: 22px;
+    }
+
+    .summary-mini {
+        gap: 7px;
+    }
+
+    .summary-pill {
+        font-size: 11px;
     }
 }
 </style>
 </head>
 
-
 <body>
-    <div id="noticeModal" class="modal-overlay">
-        <div class="modal-box">
-            <div class="modal-title">📌 안내사항</div>
 
-           <div class="modal-text">
-    <div class="modal-stat-grid">
-        <div class="modal-stat-box">
-            <span>총 별풍선</span>
-            <b>4,591,886개</b>
+<div id="noticeModal" class="modal-overlay">
+    <div class="modal-box">
+        <div class="modal-title">
+            📌 랭킹 보드 안내
         </div>
 
-        <div class="modal-stat-box">
-            <span>등록 크루</span>
-            <b>3팀</b>
+        <div class="modal-text">
+            이 페이지는 풍고 월간 별풍선 랭킹 기준으로 크루별 매출풍과 멤버별 별풍선을 표시합니다.<br><br>
+            크루 매출풍은 member.json 기준으로 update_star.py가 집계한 값입니다.<br>
+            미집계 멤버가 있을 경우 missing_members.txt를 확인해주세요.<br><br>
+            마지막 업데이트: 2026-06-16 05:01:26
         </div>
 
-        <div class="modal-stat-box">
-            <span>집계 멤버</span>
-            <b>10명</b>
+        <div class="modal-buttons">
+            <button class="modal-btn main" onclick="closeNoticeModal()">확인</button>
+            <button class="modal-btn sub" onclick="hideNoticeToday()">오늘 하루 안보기</button>
         </div>
-
-        <div class="modal-stat-box">
-            <span>미집계</span>
-            <b>0명</b>
-        </div>
-    </div>
-
-    <div class="modal-desc">
-        이 현황판은 풍고 월간 별풍선 랭킹 기준으로 멤버별 받은 별풍선을 집계합니다.<br>
-        미집계 멤버 없이 정상 집계되었습니다.<br>
-        마지막 업데이트: 2026-06-16 00:52:47
     </div>
 </div>
 
-            <div class="modal-buttons">
-                <button class="modal-btn main" onclick="closeNoticeModal()">확인</button>
-                <button class="modal-btn sub" onclick="hideNoticeToday()">오늘 하루 안보기</button>
-            </div>
+<div class="wrap">
+    <div class="title-area">
+        <div class="title-left">
+            <h1>SOOP CREW RANKING BOARD</h1>
+            <div class="sub">풍고 월간 별풍선 기준 · 크루별 매출풍 / 멤버별 랭킹</div>
+        </div>
+
+        <div class="summary-mini">
+            <div class="summary-pill">총 별풍선 <b>10,517,383</b></div>
+            <div class="summary-pill">크루 <b>4팀</b></div>
+            <div class="summary-pill">집계 멤버 <b>34명</b></div>
+            <div class="summary-pill">미집계 <b>0명</b></div>
         </div>
     </div>
 
-    <div class="wrap">
-        <div class="header">
-            <h1>⭐ SOOP 크루 별풍선 시너지 랭킹 ⭐</h1>
-            <div class="sub">별풍선 기준 자동 정렬 · 멤버 수 / 1인 평균 / 점유율 자동 계산</div>
-
-            <div class="notice-box">
-                와이고수 공유용 외부 현황판입니다. 업데이트 후 새로고침하면 최신 순위가 반영됩니다.
-            </div>
-
-            <div class="summary">
-                <div class="summary-box">
-                    <div class="summary-label">총 별풍선</div>
-                    <div class="summary-value">4,591,886개</div>
-                </div>
-
-                <div class="summary-box">
-                    <div class="summary-label">등록 크루</div>
-                    <div class="summary-value">3팀</div>
-                </div>
-
-                <div class="summary-box">
-                    <div class="summary-label">마지막 업데이트</div>
-                    <div class="summary-value" style="font-size:16px;">2026-06-16 00:52:47</div>
-                </div>
-            </div>
-        </div>
-        <div class="search-area">
-            <input
-                type="text"
-                id="searchInput"
-                placeholder="크루명 또는 멤버명을 검색하세요"
-                onkeyup="filterRanking()"
-            >
+    <div class="top3-section">
+        <div class="top3-title">
+            🔥 크루 매출 TOP3
         </div>
 
-        <div class="section-title">🏆 TOP 3</div>
-
-        <div class="top-grid">
+        <div class="top3-grid">
             
-        <div class="top-card top-1">
-            <div class="rank-badge">🥇 TOP 1</div>
-
-            <div class="crew-line">
-                <div class="crew-name">1위 씨나인</div>
-                <div class="star-count">2,034,731개</div>
+        <div
+            class="top3-card"
+            style="
+                --top-accent:#22ff4c;
+                --top-head:#063f12;
+            "
+        >
+            <div class="top3-rank">🥇 TOP 1</div>
+            <div class="top3-name">씨나인</div>
+            <div class="top3-star">4,717,716</div>
+            <div class="top3-sub">
+                평균 314,514 · 멤버 15명
             </div>
-
-            <div class="mini-info">
-                멤버 수 4명 · 1인 평균 508,682개 · 점유율 44.3%
-            </div>
-
-            <div class="bar-box">
-                <div class="bar" style="width:100.0%"></div>
-            </div>
-
-            <details class="member-detail">
-                 <summary>멤버별 상세 보기</summary>
-                 <div class="member-list">
-                     <span class='member-chip'>송채연♥ <b>626,956개</b></span><span class='member-chip'>혜루찡 <b>540,246개</b></span><span class='member-chip'>이다니♥ <b>501,102개</b></span><span class='member-chip'>쁠리vvely <b>366,427개</b></span>
-                 </div>
-</details>
         </div>
     
-        <div class="top-card top-2">
-            <div class="rank-badge">🥈 TOP 2</div>
-
-            <div class="crew-line">
-                <div class="crew-name">2위 광상</div>
-                <div class="star-count">1,615,366개</div>
+        <div
+            class="top3-card"
+            style="
+                --top-accent:#ff0f63;
+                --top-head:#5a113b;
+            "
+        >
+            <div class="top3-rank">🥈 TOP 2</div>
+            <div class="top3-name">광우상사</div>
+            <div class="top3-star">4,025,505</div>
+            <div class="top3-sub">
+                평균 365,955 · 멤버 11명
             </div>
-
-            <div class="mini-info">
-                멤버 수 3명 · 1인 평균 538,455개 · 점유율 35.2%
-            </div>
-
-            <div class="bar-box">
-                <div class="bar" style="width:79.4%"></div>
-            </div>
-
-            <details class="member-detail">
-                 <summary>멤버별 상세 보기</summary>
-                 <div class="member-list">
-                     <span class='member-chip'>가을이♡ <b>669,989개</b></span><span class='member-chip'>미디♡ <b>490,861개</b></span><span class='member-chip'>설인아님♥ <b>454,516개</b></span>
-                 </div>
-</details>
         </div>
     
-        <div class="top-card top-3">
-            <div class="rank-badge">🥉 TOP 3</div>
-
-            <div class="crew-line">
-                <div class="crew-name">3위 이노레이블</div>
-                <div class="star-count">941,789개</div>
+        <div
+            class="top3-card"
+            style="
+                --top-accent:#26f5ff;
+                --top-head:#123f48;
+            "
+        >
+            <div class="top3-rank">🥉 TOP 3</div>
+            <div class="top3-name">이노레이블</div>
+            <div class="top3-star">945,556</div>
+            <div class="top3-sub">
+                평균 315,185 · 멤버 3명
             </div>
-
-            <div class="mini-info">
-                멤버 수 3명 · 1인 평균 313,929개 · 점유율 20.5%
-            </div>
-
-            <div class="bar-box">
-                <div class="bar" style="width:46.3%"></div>
-            </div>
-
-            <details class="member-detail">
-                 <summary>멤버별 상세 보기</summary>
-                 <div class="member-list">
-                     <span class='member-chip'>애지니♡ <b>542,414개</b></span><span class='member-chip'>리에♡ <b>224,055개</b></span><span class='member-chip'>누리- <b>175,320개</b></span>
-                 </div>
-</details>
         </div>
     
-        </div>
-
-        <div class="section-title">📊 전체 순위표</div>
-
-        <div class="table-wrap">
-            <table>
-                <thead>
-                    <tr>
-                        <th>순위</th>
-                        <th>크루명</th>
-                        <th>총 별풍선</th>
-                        <th>멤버 수</th>
-                        <th>1인 평균</th>
-                        <th>점유율</th>
-                        <th>멤버별 별풍선</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    
-        <tr>
-            <td class="rank-cell">1</td>
-            <td class="name-cell">씨나인</td>
-            <td>2,034,731개</td>
-            <td>4명</td>
-            <td>508,682개</td>
-            <td>44.3%</td>
-            <td class="members-cell">
-                <details class="member-detail small">
-                    <summary>멤버별 보기</summary>
-                    <div class="member-list">
-                        <span class='member-chip'>송채연♥ <b>626,956개</b></span><span class='member-chip'>혜루찡 <b>540,246개</b></span><span class='member-chip'>이다니♥ <b>501,102개</b></span><span class='member-chip'>쁠리vvely <b>366,427개</b></span>
-                    </div>
-                </details>
-            </td>
-        </tr>
-    
-        <tr>
-            <td class="rank-cell">2</td>
-            <td class="name-cell">광상</td>
-            <td>1,615,366개</td>
-            <td>3명</td>
-            <td>538,455개</td>
-            <td>35.2%</td>
-            <td class="members-cell">
-                <details class="member-detail small">
-                    <summary>멤버별 보기</summary>
-                    <div class="member-list">
-                        <span class='member-chip'>가을이♡ <b>669,989개</b></span><span class='member-chip'>미디♡ <b>490,861개</b></span><span class='member-chip'>설인아님♥ <b>454,516개</b></span>
-                    </div>
-                </details>
-            </td>
-        </tr>
-    
-        <tr>
-            <td class="rank-cell">3</td>
-            <td class="name-cell">이노레이블</td>
-            <td>941,789개</td>
-            <td>3명</td>
-            <td>313,929개</td>
-            <td>20.5%</td>
-            <td class="members-cell">
-                <details class="member-detail small">
-                    <summary>멤버별 보기</summary>
-                    <div class="member-list">
-                        <span class='member-chip'>애지니♡ <b>542,414개</b></span><span class='member-chip'>리에♡ <b>224,055개</b></span><span class='member-chip'>누리- <b>175,320개</b></span>
-                    </div>
-                </details>
-            </td>
-        </tr>
-    
-                </tbody>
-            </table>
-        </div>
-
-        <div class="footer">
-            데이터 기준: 직접 집계 · 마지막 업데이트 시간 기준
         </div>
     </div>
+
+    <div class="search-area">
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="크루명 또는 멤버명을 검색하세요"
+            onkeyup="filterBoards()"
+        >
+    </div>
+
+    <div class="board-grid">
+        
+
+        <div
+            class="crew-board"
+            data-search="씨나인 송채연♥ 송채연♥ 토크/캠방 이다니♥ 이다니♥ 토크/캠방 쁠리vvely 쁠리vvely 먹방/쿡방 혜루찡 혜루찡 토크/캠방 애순이 애순이 토크/캠방 여을♥ 여을♥  토크/캠방 인지연JYEON 인지연JYEON 토크/캠방 하이희야♡ 하이희야♡ 토크/캠방 설윤이 설윤이_ 토크/캠방 BJ채리 BJ채리 토크/캠방 초초♡ 초초♡ 토크/캠방 아윤♡ 아윤♡ 토크/캠방 히나_♥ 히나_♥ 토크/캠방 체온_♡ 체온_♡ 토크/캠방 ε연두з ε연두з 토크/캠방"
+            style="
+                --accent:#22ff4c;
+                --accent2:#0b5f18;
+                --head:#063f12;
+                --rank:#22ff4c;
+            "
+        >
+            <div class="crew-rank-badge">
+                1
+            </div>
+
+            <div class="crew-header">
+                
+            <div class="crew-logo image-logo">
+                <img src="https://i.imgur.com/PPRSuuh.png" alt="씨나인">
+            </div>
+        
+
+                <div class="crew-info">
+                    <div class="crew-name">
+                        씨나인
+                    </div>
+
+                    <div class="crew-avg-label">
+                        평균 별풍선
+                    </div>
+
+                    <div class="crew-avg-value">
+                        314,514
+                    </div>
+                </div>
+            </div>
+
+            <div class="crew-sales">
+                <div class="sales-label">
+                    👑 크루 매출풍
+                </div>
+
+                <div class="sales-value">
+                    4,717,716
+                </div>
+            </div>
+
+            <div class="crew-total-track">
+                <div class="crew-total-fill" style="width:100.0%"></div>
+            </div>
+
+            <div class="member-list">
+                
+            <div class="member-row first">
+            
+                <div class="member-main">
+                    
+                <div class="top-badge">
+                    👑 1ST
+                </div>
+            
+
+                    
+            <div class="member-avatar image-avatar">
+                <img src="https://stimg.sooplive.com/LOGO/jf/jfiary0718/jfiary0718.jpg" alt="송채연♥">
+            </div>
+        
+
+                    <div class="member-name">
+                        송채연♥
+                    </div>
+
+                    <div class="member-score">
+                        628,090
+                    </div>
+                </div>
+
+                <div class="member-track">
+                    <div class="member-fill" style="width:100.0%"></div>
+                </div>
+            </div>
+        
+            <div class="member-row">
+            
+                <div class="member-main">
+                    
+                <div class="member-rank">
+                    2
+                </div>
+            
+
+                    
+        <div class="member-avatar text-avatar">
+            혜루
+        </div>
+    
+
+                    <div class="member-name">
+                        혜루찡
+                    </div>
+
+                    <div class="member-score">
+                        550,880
+                    </div>
+                </div>
+
+                <div class="member-track">
+                    <div class="member-fill" style="width:87.7%"></div>
+                </div>
+            </div>
+        
+            <div class="member-row">
+            
+                <div class="member-main">
+                    
+                <div class="member-rank">
+                    3
+                </div>
+            
+
+                    
+        <div class="member-avatar text-avatar">
+            애순
+        </div>
+    
+
+                    <div class="member-name">
+                        애순이
+                    </div>
+
+                    <div class="member-score">
+                        538,937
+                    </div>
+                </div>
+
+                <div class="member-track">
+                    <div class="member-fill" style="width:85.8%"></div>
+                </div>
+            </div>
+        
+            <div class="member-row">
+            
+                <div class="member-main">
+                    
+                <div class="member-rank">
+                    4
+                </div>
+            
+
+                    
+        <div class="member-avatar text-avatar">
+            이다
+        </div>
+    
+
+                    <div class="member-name">
+                        이다니♥
+                    </div>
+
+                    <div class="member-score">
+                        502,143
+                    </div>
+                </div>
+
+                <div class="member-track">
+                    <div class="member-fill" style="width:79.9%"></div>
+                </div>
+            </div>
+        
+            <div class="member-row">
+            
+                <div class="member-main">
+                    
+                <div class="member-rank">
+                    5
+                </div>
+            
+
+                    
+        <div class="member-avatar text-avatar">
+            여을
+        </div>
+    
+
+                    <div class="member-name">
+                        여을♥
+                    </div>
+
+                    <div class="member-score">
+                        502,091
+                    </div>
+                </div>
+
+                <div class="member-track">
+                    <div class="member-fill" style="width:79.9%"></div>
+                </div>
+            </div>
+        
+            <div class="member-row">
+            
+                <div class="member-main">
+                    
+                <div class="member-rank">
+                    6
+                </div>
+            
+
+                    
+        <div class="member-avatar text-avatar">
+            인지
+        </div>
+    
+
+                    <div class="member-name">
+                        인지연JYEON
+                    </div>
+
+                    <div class="member-score">
+                        390,218
+                    </div>
+                </div>
+
+                <div class="member-track">
+                    <div class="member-fill" style="width:62.1%"></div>
+                </div>
+            </div>
+        
+            <div class="member-row">
+            
+                <div class="member-main">
+                    
+                <div class="member-rank">
+                    7
+                </div>
+            
+
+                    
+        <div class="member-avatar text-avatar">
+            하이
+        </div>
+    
+
+                    <div class="member-name">
+                        하이희야♡
+                    </div>
+
+                    <div class="member-score">
+                        375,304
+                    </div>
+                </div>
+
+                <div class="member-track">
+                    <div class="member-fill" style="width:59.8%"></div>
+                </div>
+            </div>
+        
+            <div class="member-row">
+            
+                <div class="member-main">
+                    
+                <div class="member-rank">
+                    8
+                </div>
+            
+
+                    
+        <div class="member-avatar text-avatar">
+            쁠리
+        </div>
+    
+
+                    <div class="member-name">
+                        쁠리vvely
+                    </div>
+
+                    <div class="member-score">
+                        366,427
+                    </div>
+                </div>
+
+                <div class="member-track">
+                    <div class="member-fill" style="width:58.3%"></div>
+                </div>
+            </div>
+        
+            <div class="member-row">
+            
+                <div class="member-main">
+                    
+                <div class="member-rank">
+                    9
+                </div>
+            
+
+                    
+        <div class="member-avatar text-avatar">
+            초초
+        </div>
+    
+
+                    <div class="member-name">
+                        초초♡
+                    </div>
+
+                    <div class="member-score">
+                        236,058
+                    </div>
+                </div>
+
+                <div class="member-track">
+                    <div class="member-fill" style="width:37.6%"></div>
+                </div>
+            </div>
+        
+            <div class="member-row">
+            
+                <div class="member-main">
+                    
+                <div class="member-rank">
+                    10
+                </div>
+            
+
+                    
+        <div class="member-avatar text-avatar">
+            BJ
+        </div>
+    
+
+                    <div class="member-name">
+                        BJ채리
+                    </div>
+
+                    <div class="member-score">
+                        168,236
+                    </div>
+                </div>
+
+                <div class="member-track">
+                    <div class="member-fill" style="width:26.8%"></div>
+                </div>
+            </div>
+        
+            <div class="member-row extra-row">
+            
+                <div class="member-main">
+                    
+                <div class="member-rank">
+                    11
+                </div>
+            
+
+                    
+        <div class="member-avatar text-avatar">
+            설윤
+        </div>
+    
+
+                    <div class="member-name">
+                        설윤이
+                    </div>
+
+                    <div class="member-score">
+                        145,611
+                    </div>
+                </div>
+
+                <div class="member-track">
+                    <div class="member-fill" style="width:23.2%"></div>
+                </div>
+            </div>
+        
+            <div class="member-row extra-row">
+            
+                <div class="member-main">
+                    
+                <div class="member-rank">
+                    12
+                </div>
+            
+
+                    
+        <div class="member-avatar text-avatar">
+            아윤
+        </div>
+    
+
+                    <div class="member-name">
+                        아윤♡
+                    </div>
+
+                    <div class="member-score">
+                        89,864
+                    </div>
+                </div>
+
+                <div class="member-track">
+                    <div class="member-fill" style="width:14.3%"></div>
+                </div>
+            </div>
+        
+            <div class="member-row extra-row">
+            
+                <div class="member-main">
+                    
+                <div class="member-rank">
+                    13
+                </div>
+            
+
+                    
+        <div class="member-avatar text-avatar">
+            히나
+        </div>
+    
+
+                    <div class="member-name">
+                        히나_♥
+                    </div>
+
+                    <div class="member-score">
+                        89,601
+                    </div>
+                </div>
+
+                <div class="member-track">
+                    <div class="member-fill" style="width:14.3%"></div>
+                </div>
+            </div>
+        
+            <div class="member-row extra-row">
+            
+                <div class="member-main">
+                    
+                <div class="member-rank">
+                    14
+                </div>
+            
+
+                    
+        <div class="member-avatar text-avatar">
+            연두
+        </div>
+    
+
+                    <div class="member-name">
+                        ε연두з
+                    </div>
+
+                    <div class="member-score">
+                        68,599
+                    </div>
+                </div>
+
+                <div class="member-track">
+                    <div class="member-fill" style="width:10.9%"></div>
+                </div>
+            </div>
+        
+            <div class="member-row extra-row">
+            
+                <div class="member-main">
+                    
+                <div class="member-rank">
+                    15
+                </div>
+            
+
+                    
+        <div class="member-avatar text-avatar">
+            체온
+        </div>
+    
+
+                    <div class="member-name">
+                        체온_♡
+                    </div>
+
+                    <div class="member-score">
+                        65,657
+                    </div>
+                </div>
+
+                <div class="member-track">
+                    <div class="member-fill" style="width:10.5%"></div>
+                </div>
+            </div>
+        
+            </div>
+
+            
+                <button class="show-more-btn" onclick="toggleMembers(this)">
+                    멤버 더보기 +5명
+                </button>
+            
+
+            <div class="crew-footer">
+                <div class="footer-box">
+                    <div class="footer-label">
+                        총원
+                    </div>
+                    <div class="footer-value">
+                        15명
+                    </div>
+                </div>
+
+                <div class="footer-box">
+                    <div class="footer-label">
+                        합계
+                    </div>
+                    <div class="footer-value">
+                        4,717,716
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+
+        <div
+            class="crew-board"
+            data-search="광우상사 가을이♡ 가을이♡  토크/캠방 설인아님♥ 설인아님♥ 토크/캠방 미디♡ 미디♡ 뮤직/댄스 임주연♥ 임주연♥ 토크/캠방 원영님♥ 원영님♥ 토크/캠방 러블리나♥ 러블리나♥ 토크/캠방 아이빈♥ 아이빈♥ 토크/캠방 함지아♥ 함지아♥ 토크/캠방 안둥♥ 안둥♥  토크/캠방 이온♥ 이온♥  토크/캠방 숨댕♥ 숨댕♥ 토크/캠방"
+            style="
+                --accent:#ff0f63;
+                --accent2:#5f1037;
+                --head:#5a113b;
+                --rank:#ff0f63;
+            "
+        >
+            <div class="crew-rank-badge">
+                2
+            </div>
+
+            <div class="crew-header">
+                
+        <div class="crew-logo text-logo">
+            광우
+        </div>
+    
+
+                <div class="crew-info">
+                    <div class="crew-name">
+                        광우상사
+                    </div>
+
+                    <div class="crew-avg-label">
+                        평균 별풍선
+                    </div>
+
+                    <div class="crew-avg-value">
+                        365,955
+                    </div>
+                </div>
+            </div>
+
+            <div class="crew-sales">
+                <div class="sales-label">
+                    👑 크루 매출풍
+                </div>
+
+                <div class="sales-value">
+                    4,025,505
+                </div>
+            </div>
+
+            <div class="crew-total-track">
+                <div class="crew-total-fill" style="width:85.3%"></div>
+            </div>
+
+            <div class="member-list">
+                
+            <div class="member-row first">
+            
+                <div class="member-main">
+                    
+                <div class="top-badge">
+                    👑 1ST
+                </div>
+            
+
+                    
+        <div class="member-avatar text-avatar">
+            가을
+        </div>
+    
+
+                    <div class="member-name">
+                        가을이♡
+                    </div>
+
+                    <div class="member-score">
+                        670,741
+                    </div>
+                </div>
+
+                <div class="member-track">
+                    <div class="member-fill" style="width:100.0%"></div>
+                </div>
+            </div>
+        
+            <div class="member-row">
+            
+                <div class="member-main">
+                    
+                <div class="member-rank">
+                    2
+                </div>
+            
+
+                    
+        <div class="member-avatar text-avatar">
+            미디
+        </div>
+    
+
+                    <div class="member-name">
+                        미디♡
+                    </div>
+
+                    <div class="member-score">
+                        515,656
+                    </div>
+                </div>
+
+                <div class="member-track">
+                    <div class="member-fill" style="width:76.9%"></div>
+                </div>
+            </div>
+        
+            <div class="member-row">
+            
+                <div class="member-main">
+                    
+                <div class="member-rank">
+                    3
+                </div>
+            
+
+                    
+        <div class="member-avatar text-avatar">
+            설인
+        </div>
+    
+
+                    <div class="member-name">
+                        설인아님♥
+                    </div>
+
+                    <div class="member-score">
+                        454,516
+                    </div>
+                </div>
+
+                <div class="member-track">
+                    <div class="member-fill" style="width:67.8%"></div>
+                </div>
+            </div>
+        
+            <div class="member-row">
+            
+                <div class="member-main">
+                    
+                <div class="member-rank">
+                    4
+                </div>
+            
+
+                    
+        <div class="member-avatar text-avatar">
+            임주
+        </div>
+    
+
+                    <div class="member-name">
+                        임주연♥
+                    </div>
+
+                    <div class="member-score">
+                        420,401
+                    </div>
+                </div>
+
+                <div class="member-track">
+                    <div class="member-fill" style="width:62.7%"></div>
+                </div>
+            </div>
+        
+            <div class="member-row">
+            
+                <div class="member-main">
+                    
+                <div class="member-rank">
+                    5
+                </div>
+            
+
+                    
+        <div class="member-avatar text-avatar">
+            원영
+        </div>
+    
+
+                    <div class="member-name">
+                        원영님♥
+                    </div>
+
+                    <div class="member-score">
+                        363,938
+                    </div>
+                </div>
+
+                <div class="member-track">
+                    <div class="member-fill" style="width:54.3%"></div>
+                </div>
+            </div>
+        
+            <div class="member-row">
+            
+                <div class="member-main">
+                    
+                <div class="member-rank">
+                    6
+                </div>
+            
+
+                    
+        <div class="member-avatar text-avatar">
+            러블
+        </div>
+    
+
+                    <div class="member-name">
+                        러블리나♥
+                    </div>
+
+                    <div class="member-score">
+                        315,440
+                    </div>
+                </div>
+
+                <div class="member-track">
+                    <div class="member-fill" style="width:47.0%"></div>
+                </div>
+            </div>
+        
+            <div class="member-row">
+            
+                <div class="member-main">
+                    
+                <div class="member-rank">
+                    7
+                </div>
+            
+
+                    
+        <div class="member-avatar text-avatar">
+            아이
+        </div>
+    
+
+                    <div class="member-name">
+                        아이빈♥
+                    </div>
+
+                    <div class="member-score">
+                        304,880
+                    </div>
+                </div>
+
+                <div class="member-track">
+                    <div class="member-fill" style="width:45.5%"></div>
+                </div>
+            </div>
+        
+            <div class="member-row">
+            
+                <div class="member-main">
+                    
+                <div class="member-rank">
+                    8
+                </div>
+            
+
+                    
+        <div class="member-avatar text-avatar">
+            함지
+        </div>
+    
+
+                    <div class="member-name">
+                        함지아♥
+                    </div>
+
+                    <div class="member-score">
+                        304,249
+                    </div>
+                </div>
+
+                <div class="member-track">
+                    <div class="member-fill" style="width:45.4%"></div>
+                </div>
+            </div>
+        
+            <div class="member-row">
+            
+                <div class="member-main">
+                    
+                <div class="member-rank">
+                    9
+                </div>
+            
+
+                    
+        <div class="member-avatar text-avatar">
+            안둥
+        </div>
+    
+
+                    <div class="member-name">
+                        안둥♥
+                    </div>
+
+                    <div class="member-score">
+                        284,604
+                    </div>
+                </div>
+
+                <div class="member-track">
+                    <div class="member-fill" style="width:42.4%"></div>
+                </div>
+            </div>
+        
+            <div class="member-row">
+            
+                <div class="member-main">
+                    
+                <div class="member-rank">
+                    10
+                </div>
+            
+
+                    
+        <div class="member-avatar text-avatar">
+            이온
+        </div>
+    
+
+                    <div class="member-name">
+                        이온♥
+                    </div>
+
+                    <div class="member-score">
+                        244,572
+                    </div>
+                </div>
+
+                <div class="member-track">
+                    <div class="member-fill" style="width:36.5%"></div>
+                </div>
+            </div>
+        
+            <div class="member-row extra-row">
+            
+                <div class="member-main">
+                    
+                <div class="member-rank">
+                    11
+                </div>
+            
+
+                    
+        <div class="member-avatar text-avatar">
+            숨댕
+        </div>
+    
+
+                    <div class="member-name">
+                        숨댕♥
+                    </div>
+
+                    <div class="member-score">
+                        146,508
+                    </div>
+                </div>
+
+                <div class="member-track">
+                    <div class="member-fill" style="width:21.8%"></div>
+                </div>
+            </div>
+        
+            </div>
+
+            
+                <button class="show-more-btn" onclick="toggleMembers(this)">
+                    멤버 더보기 +1명
+                </button>
+            
+
+            <div class="crew-footer">
+                <div class="footer-box">
+                    <div class="footer-label">
+                        총원
+                    </div>
+                    <div class="footer-value">
+                        11명
+                    </div>
+                </div>
+
+                <div class="footer-box">
+                    <div class="footer-label">
+                        합계
+                    </div>
+                    <div class="footer-value">
+                        4,025,505
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+
+        <div
+            class="crew-board"
+            data-search="이노레이블 애지니♡ 애지니♡ 여행 리에♡ 리에♡ 토크/캠방 누리- 누리- 토크/캠방"
+            style="
+                --accent:#26f5ff;
+                --accent2:#155d63;
+                --head:#123f48;
+                --rank:#26f5ff;
+            "
+        >
+            <div class="crew-rank-badge">
+                3
+            </div>
+
+            <div class="crew-header">
+                
+        <div class="crew-logo text-logo">
+            이노
+        </div>
+    
+
+                <div class="crew-info">
+                    <div class="crew-name">
+                        이노레이블
+                    </div>
+
+                    <div class="crew-avg-label">
+                        평균 별풍선
+                    </div>
+
+                    <div class="crew-avg-value">
+                        315,185
+                    </div>
+                </div>
+            </div>
+
+            <div class="crew-sales">
+                <div class="sales-label">
+                    👑 크루 매출풍
+                </div>
+
+                <div class="sales-value">
+                    945,556
+                </div>
+            </div>
+
+            <div class="crew-total-track">
+                <div class="crew-total-fill" style="width:20.0%"></div>
+            </div>
+
+            <div class="member-list">
+                
+            <div class="member-row first">
+            
+                <div class="member-main">
+                    
+                <div class="top-badge">
+                    👑 1ST
+                </div>
+            
+
+                    
+        <div class="member-avatar text-avatar">
+            애지
+        </div>
+    
+
+                    <div class="member-name">
+                        애지니♡
+                    </div>
+
+                    <div class="member-score">
+                        542,414
+                    </div>
+                </div>
+
+                <div class="member-track">
+                    <div class="member-fill" style="width:100.0%"></div>
+                </div>
+            </div>
+        
+            <div class="member-row">
+            
+                <div class="member-main">
+                    
+                <div class="member-rank">
+                    2
+                </div>
+            
+
+                    
+        <div class="member-avatar text-avatar">
+            리에
+        </div>
+    
+
+                    <div class="member-name">
+                        리에♡
+                    </div>
+
+                    <div class="member-score">
+                        224,055
+                    </div>
+                </div>
+
+                <div class="member-track">
+                    <div class="member-fill" style="width:41.3%"></div>
+                </div>
+            </div>
+        
+            <div class="member-row">
+            
+                <div class="member-main">
+                    
+                <div class="member-rank">
+                    3
+                </div>
+            
+
+                    
+        <div class="member-avatar text-avatar">
+            누리
+        </div>
+    
+
+                    <div class="member-name">
+                        누리-
+                    </div>
+
+                    <div class="member-score">
+                        179,087
+                    </div>
+                </div>
+
+                <div class="member-track">
+                    <div class="member-fill" style="width:33.0%"></div>
+                </div>
+            </div>
+        
+            </div>
+
+            
+
+            <div class="crew-footer">
+                <div class="footer-box">
+                    <div class="footer-label">
+                        총원
+                    </div>
+                    <div class="footer-value">
+                        3명
+                    </div>
+                </div>
+
+                <div class="footer-box">
+                    <div class="footer-label">
+                        합계
+                    </div>
+                    <div class="footer-value">
+                        945,556
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+
+        <div
+            class="crew-board"
+            data-search="판타지유 [NO콘]미숑 [NO콘]미숑 토크/캠방 쑤지 쑤지 토크/캠방 본방단화만다 본방단화만다 토크/캠방 가비[♥] 가비[♥] 토크/캠방 윤아현 윤아현 토크/캠방"
+            style="
+                --accent:#3b3bff;
+                --accent2:#11116c;
+                --head:#11116c;
+                --rank:#3b3bff;
+            "
+        >
+            <div class="crew-rank-badge">
+                4
+            </div>
+
+            <div class="crew-header">
+                
+        <div class="crew-logo text-logo">
+            판타
+        </div>
+    
+
+                <div class="crew-info">
+                    <div class="crew-name">
+                        판타지유
+                    </div>
+
+                    <div class="crew-avg-label">
+                        평균 별풍선
+                    </div>
+
+                    <div class="crew-avg-value">
+                        165,721
+                    </div>
+                </div>
+            </div>
+
+            <div class="crew-sales">
+                <div class="sales-label">
+                    👑 크루 매출풍
+                </div>
+
+                <div class="sales-value">
+                    828,606
+                </div>
+            </div>
+
+            <div class="crew-total-track">
+                <div class="crew-total-fill" style="width:17.6%"></div>
+            </div>
+
+            <div class="member-list">
+                
+            <div class="member-row first">
+            
+                <div class="member-main">
+                    
+                <div class="top-badge">
+                    👑 1ST
+                </div>
+            
+
+                    
+        <div class="member-avatar text-avatar">
+            NO
+        </div>
+    
+
+                    <div class="member-name">
+                        [NO콘]미숑
+                    </div>
+
+                    <div class="member-score">
+                        414,262
+                    </div>
+                </div>
+
+                <div class="member-track">
+                    <div class="member-fill" style="width:100.0%"></div>
+                </div>
+            </div>
+        
+            <div class="member-row">
+            
+                <div class="member-main">
+                    
+                <div class="member-rank">
+                    2
+                </div>
+            
+
+                    
+        <div class="member-avatar text-avatar">
+            쑤지
+        </div>
+    
+
+                    <div class="member-name">
+                        쑤지
+                    </div>
+
+                    <div class="member-score">
+                        110,863
+                    </div>
+                </div>
+
+                <div class="member-track">
+                    <div class="member-fill" style="width:26.8%"></div>
+                </div>
+            </div>
+        
+            <div class="member-row">
+            
+                <div class="member-main">
+                    
+                <div class="member-rank">
+                    3
+                </div>
+            
+
+                    
+        <div class="member-avatar text-avatar">
+            본방
+        </div>
+    
+
+                    <div class="member-name">
+                        본방단화만다
+                    </div>
+
+                    <div class="member-score">
+                        109,698
+                    </div>
+                </div>
+
+                <div class="member-track">
+                    <div class="member-fill" style="width:26.5%"></div>
+                </div>
+            </div>
+        
+            <div class="member-row">
+            
+                <div class="member-main">
+                    
+                <div class="member-rank">
+                    4
+                </div>
+            
+
+                    
+        <div class="member-avatar text-avatar">
+            가비
+        </div>
+    
+
+                    <div class="member-name">
+                        가비[♥]
+                    </div>
+
+                    <div class="member-score">
+                        102,154
+                    </div>
+                </div>
+
+                <div class="member-track">
+                    <div class="member-fill" style="width:24.7%"></div>
+                </div>
+            </div>
+        
+            <div class="member-row">
+            
+                <div class="member-main">
+                    
+                <div class="member-rank">
+                    5
+                </div>
+            
+
+                    
+        <div class="member-avatar text-avatar">
+            윤아
+        </div>
+    
+
+                    <div class="member-name">
+                        윤아현
+                    </div>
+
+                    <div class="member-score">
+                        91,629
+                    </div>
+                </div>
+
+                <div class="member-track">
+                    <div class="member-fill" style="width:22.1%"></div>
+                </div>
+            </div>
+        
+            </div>
+
+            
+
+            <div class="crew-footer">
+                <div class="footer-box">
+                    <div class="footer-label">
+                        총원
+                    </div>
+                    <div class="footer-value">
+                        5명
+                    </div>
+                </div>
+
+                <div class="footer-box">
+                    <div class="footer-label">
+                        합계
+                    </div>
+                    <div class="footer-value">
+                        828,606
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+    </div>
+
+    <div class="bottom-info">
+        마지막 업데이트: 2026-06-16 05:01:26<br>
+        크루 매출풍은 member.json 기준으로 update_star.py가 집계한 값입니다.
+    </div>
+</div>
+
 
 <script>
 
@@ -718,13 +2050,13 @@ function closeNoticeModal() {
 
 function hideNoticeToday() {
     const today = getTodayKey();
-    localStorage.setItem("noticeHideDate", today);
+    localStorage.setItem("crewBoardNoticeHideDate", today);
     closeNoticeModal();
 }
 
 document.addEventListener("DOMContentLoaded", function() {
     const today = getTodayKey();
-    const savedDate = localStorage.getItem("noticeHideDate");
+    const savedDate = localStorage.getItem("crewBoardNoticeHideDate");
 
     if (savedDate !== today) {
         openNoticeModal();
@@ -739,33 +2071,41 @@ function normalizeText(text) {
         .replace(/[\[\]\(\)♡♥]/g, "");
 }
 
-function filterRanking() {
+function filterBoards() {
     const input = document.getElementById("searchInput");
     const keyword = normalizeText(input.value);
 
-    const cards = document.querySelectorAll(".top-card");
-    const rows = document.querySelectorAll("tbody tr");
+    const boards = document.querySelectorAll(".crew-board");
 
-    cards.forEach(card => {
-        const text = normalizeText(card.textContent);
-
-        if (keyword === "" || text.includes(keyword)) {
-            card.style.display = "";
-        } else {
-            card.style.display = "none";
-        }
-    });
-
-    rows.forEach(row => {
-        const text = normalizeText(row.textContent);
+    boards.forEach(board => {
+        const text = normalizeText(board.getAttribute("data-search") || board.textContent);
 
         if (keyword === "" || text.includes(keyword)) {
-            row.style.display = "";
+            board.style.display = "";
         } else {
-            row.style.display = "none";
+            board.style.display = "none";
         }
     });
 }
+
+function toggleMembers(button) {
+    const board = button.closest(".crew-board");
+
+    if (!board) {
+        return;
+    }
+
+    const isExpanded = board.classList.toggle("expanded");
+
+    if (isExpanded) {
+        button.textContent = "멤버 접기";
+    } else {
+        const hiddenRows = board.querySelectorAll(".member-row.extra-row").length;
+        button.textContent = "멤버 더보기 +" + hiddenRows + "명";
+    }
+}
+
 </script>
+
 </body>
 </html>
